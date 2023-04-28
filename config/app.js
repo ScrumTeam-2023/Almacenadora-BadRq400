@@ -3,10 +3,11 @@ const express = require('express');
 const morgan = require('morgan')
 const helmet = require('helmet')
 const cors = require('cors')
-
+const userRoutes = require('../src/user/user.routes');
+const clientRoutes = require('../src/clients/clients.routes');
 //instancia 
 const app = express();
-const port = process.env.PORT || 3200;
+const port = process.env.PORT || 3000;
 //RUTAS PRO
 
 
@@ -17,6 +18,9 @@ app.use(express.json())
 app.use(cors());
 app.use(helmet());
 app.use(morgan('dev'))
+app.use('/user', userRoutes);
+app.use('/client', clientRoutes);
+
 
 //Rutas Default
 
