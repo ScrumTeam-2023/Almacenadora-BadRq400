@@ -13,6 +13,7 @@ exports.defaultAdmin = async()=>{
             username: 'Allvaso',
             password: '123',
             email: 'kevinvaso@gmail.com',
+            phone: '5827-4837',
             role: 'ADMIN'
         }
 
