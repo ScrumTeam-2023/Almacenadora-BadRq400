@@ -23,3 +23,14 @@ exports.ensureAuth = (req,res,next)=>{
          req.user = payload;
          next()
 }
+
+exports.isAdmin = async(req, res, next)=>{
+    try{
+        let user = req.user;
+        if(user.role !== 'ADMIN') return res.status(403).send({message: 'Unauthorized user'});
+        next();
+    }catch(err){
+        console.error(err);
+        return res.status(403).send({message: 'Error unauthorized user'});
+    }
+}

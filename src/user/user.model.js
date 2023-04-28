@@ -40,7 +40,8 @@ const userSchema = mongoose.Schema({
     role: {
         type: String,
         required: true,
-        uppercase: true
+        uppercase: true,
+        default: 'EMPLOYEE'
 
     },
 
