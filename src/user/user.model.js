@@ -39,7 +39,11 @@ const userSchema = mongoose.Schema({
     },
     role: {
         type: String,
+<<<<<<< HEAD
         required: true,
+=======
+        required: false,
+>>>>>>> ctomas2021215
         uppercase: true,
         default: 'EMPLOYEE'
 
