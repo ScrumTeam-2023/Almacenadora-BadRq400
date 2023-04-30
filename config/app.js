@@ -10,15 +10,11 @@ const app = express();
 const port = process.env.PORT || 3200;
 //RUTAS PRO
 const clientRoutes = require('../src/clients/clients.routes');
-<<<<<<< HEAD
-const userRoutes = require('../src/user/user.routes')
-
-=======
 const userRoutes = require('../src/user/user.routes');
 const servicesRoutes = require ('../src/servicesAdicional/servicesAdicional.routes');
 const accountRoutes = require ('../src/account/account.routes');
 const bodegaRoutes = require ('../src/bodega/bodega.routes');
->>>>>>> ctomas2021215
+const arrendaRoutes = require('../src/arrendamiento/arrendamiento.routes');
 
 //config del Server
 app.use(express.urlencoded({extended: false}));
@@ -28,13 +24,10 @@ app.use(helmet());
 app.use(morgan('dev'))
 app.use('/user',userRoutes);
 app.use('/client',clientRoutes);
-<<<<<<< HEAD
-=======
 app.use('/services', servicesRoutes);
 app.use('/account',accountRoutes);
-app.use('/bodega',bodegaRoutes)
->>>>>>> ctomas2021215
-
+app.use('/bodega',bodegaRoutes);
+app.use('/arrenda', arrendaRoutes);
 //Rutas Default
 
 //turn up This Crap

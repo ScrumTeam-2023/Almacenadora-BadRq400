@@ -20,8 +20,9 @@ const bodegaSchema = mongoose.Schema({
         required: true
     },
     availability: {
-        type: String,
-        required: true
+        type: Boolean,
+        required: true,
+        default: true
     },
     price: {
         type: Number,
