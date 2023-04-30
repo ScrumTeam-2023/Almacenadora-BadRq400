@@ -3,34 +3,34 @@
 const mongoose = require('mongoose');
 
 const bodegaSchema = mongoose.Schema({
-    nombre: {
+    name: {
         type: String,
         required: true
     },
-    descripcion: {
+    description: {
         type: String,
         required: true
     },
-    ubicacion: {
+    location: {
         type: String,
         required: true
     },
-    tamaño: {
+    size: {
+        type: String,
+        required: true
+    },
+    availability: {
+        type: String,
+        required: true
+    },
+    price: {
         type: Number,
         required: true
     },
-    disponibilidad: {
-        type: Boolean,
-        required: true
-    },
-    precio: {
-        type: Number,
-        required: true
-    },
-    user: {
+    client: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true
+      ref: 'Client',
+      required: false
     }
 }, { versionKey: false });
 
