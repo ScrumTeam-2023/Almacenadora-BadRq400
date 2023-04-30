@@ -1,6 +1,8 @@
 'use strict'
 
 const Client = require('../clients/clients.model')
+const { validateData, encrypt , checkPassword } = require('../utils/validate')
+const { createToken } = require ('../services/jwt')
 
 
 //EMPLOYEE ONLY!
