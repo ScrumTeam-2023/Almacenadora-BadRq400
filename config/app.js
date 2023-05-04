@@ -1,3 +1,4 @@
+'use Strict'
 //Imports
 const express = require('express');
 const morgan = require('morgan')
@@ -9,8 +10,12 @@ const clientRoutes = require('../src/clients/clients.routes');
 const app = express();
 const port = process.env.PORT || 3000;
 //RUTAS PRO
-
-
+const clientRoutes = require('../src/clients/clients.routes');
+const userRoutes = require('../src/user/user.routes');
+const servicesRoutes = require ('../src/servicesAdicional/servicesAdicional.routes');
+const accountRoutes = require ('../src/account/account.routes');
+const bodegaRoutes = require ('../src/bodega/bodega.routes');
+const arrendaRoutes = require('../src/arrendamiento/arrendamiento.routes');
 
 //config del Server
 app.use(express.urlencoded({extended: false}));
@@ -18,10 +23,19 @@ app.use(express.json())
 app.use(cors());
 app.use(helmet());
 app.use(morgan('dev'))
+<<<<<<< HEAD
 app.use('/user', userRoutes);
 app.use('/client', clientRoutes);
 
 
+=======
+app.use('/user',userRoutes);
+app.use('/client',clientRoutes);
+app.use('/services', servicesRoutes);
+app.use('/account',accountRoutes);
+app.use('/bodega',bodegaRoutes);
+app.use('/arrenda', arrendaRoutes);
+>>>>>>> main
 //Rutas Default
 
 //turn up This Crap
