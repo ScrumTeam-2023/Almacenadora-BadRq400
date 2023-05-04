@@ -2,6 +2,9 @@
 
 const Client = require('../clients/clients.model')
 
+const { validateData, encrypt , checkPassword } = require('../utils/validate')
+const { createToken } = require ('../services/jwt')
+
 
 //EMPLOYEE ONLY!
 exports.saveClient = async (req,res)=>{

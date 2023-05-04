@@ -31,9 +31,17 @@ const userSchema = mongoose.Schema({
     },
     role: {
         type: String,
+<<<<<<< HEAD
         required: true,
         uppercase: true
     }
+=======
+        required: false,
+        uppercase: true,
+        default: 'EMPLOYEE'
+
+    },
+>>>>>>> malvarez2018477
 
 }, { versionKey: false });
 module.exports = mongoose.model('User',userSchema)
