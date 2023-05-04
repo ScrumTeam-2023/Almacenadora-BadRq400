@@ -6,7 +6,7 @@ exports.connect = async()=>{
         const uriMongo = `${process.env.URI_MONGO}`;
         mongoose.set('strictQuery',false)
         await mongoose.connect(uriMongo);
-        console.log('bruh')
+        console.log('Server is ON!')
     } catch (err){
         console.error(err)
         

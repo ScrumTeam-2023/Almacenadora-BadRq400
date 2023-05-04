@@ -10,11 +10,13 @@ exports.defaultAdmin = async()=>{
         let data = {
             name: 'Kevin Vaso',
             surname: 'Illem',
-            username: 'Allvaso',
+            username: 'allvaso',
             password: '123',
             email: 'kevinvaso@gmail.com',
+            phone: '58274837',
             role: 'ADMIN'
         }
+
 
         let params = {
             password: data.password,
@@ -62,31 +64,34 @@ exports.register = async(req,res)=>{
 
 }
 
-exports.login = async(req,res)=>{
-    try {
-            let data = req.body;
-            let credentials = {
-                username: data.username,
-                password: data.password
-            }
-            let msg = validateData(credentials);
-            if(msg) return res.status(400).send(msg)
-
-            let user = await User.findOne({username: data.username});
-
-            if (user && await checkPassword(data.password,user.password)){
-                let token = await createToken(user)
-                return res.send({message: 'user Logged Sucessfully',token});
-            }
-            return res.status(401).send({message: 'Invalid Credentials!'})
-
-
-    } catch (err) {
-        console.error(err)
-        return res.status(500).send({message: 'CRITICAL HIT! at "Login"'})
-        
-    }
+//FIXED!
+exports.login = async(req, res)=>{
+    try{
     
+        let data = req.body;
+        let credentials = { 
+            username: data.username,
+            password: data.password
+        }
+        let msg = validateData(credentials);
+        if(msg) return res.status(400).send(msg)
+
+        let user = await User.findOne({username: data.username});
+
+        if(user && await checkPassword(data.password, user.password)) {
+            let userLogged = {
+                name: user.name,
+                username: user.username,
+                role: user.role
+            }
+            let token = await createToken(user)
+            return res.send({message: 'User logged sucessfully', token, userLogged});
+        }
+        return res.status(401).send({message: 'Invalid credentials'});
+    }catch(err){
+        console.error(err);
+        return res.status(500).send({message: 'Error, not logged'});
+    }
 }
 
 exports.update = async(req,res)=>{
