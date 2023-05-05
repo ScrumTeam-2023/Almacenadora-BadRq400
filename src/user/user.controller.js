@@ -10,12 +10,13 @@ exports.defaultAdmin = async()=>{
         let data = {
             name: 'Kevin Vaso',
             surname: 'Illem',
-            username: 'Allvaso',
+            username: 'allvaso',
             password: '123',
             email: 'kevinvaso@gmail.com',
-            phone: '5827-4837',
+            phone: '58274837',
             role: 'ADMIN'
         }
+
 
         let params = {
             password: data.password,
@@ -63,42 +64,43 @@ exports.register = async(req,res)=>{
 
 }
 
-exports.login = async(req,res)=>{
-    try {
-            let data = req.body;
-            let credentials = {
-                username: data.username,
-                password: data.password
-            }
-            let msg = validateData(credentials);
-            if(msg) return res.status(400).send(msg)
-
-            let user = await User.findOne({username: data.username});
-
-            if (user && await checkPassword(data.password,user.password)){
-                let token = await createToken(user)
-                return res.send({message: 'user Logged Sucessfully',token});
-            }
-            return res.status(401).send({message: 'Invalid Credentials!'})
-
-
-    } catch (err) {
-        console.error(err)
-        return res.status(500).send({message: 'CRITICAL HIT! at "Login"'})
-        
-    }
+//FIXED!
+exports.login = async(req, res)=>{
+    try{
     
+        let data = req.body;
+        let credentials = { 
+            username: data.username,
+            password: data.password
+        }
+        let msg = validateData(credentials);
+        if(msg) return res.status(400).send(msg)
+
+        let user = await User.findOne({username: data.username});
+
+        if(user && await checkPassword(data.password, user.password)) {
+            let userLogged = {
+                name: user.name,
+                username: user.username,
+                role: user.role
+            }
+            let token = await createToken(user)
+            return res.send({message: 'User logged sucessfully', token, userLogged});
+        }
+        return res.status(401).send({message: 'Invalid credentials'});
+    }catch(err){
+        console.error(err);
+        return res.status(500).send({message: 'Error, not logged'});
+    }
 }
 
 exports.update = async(req,res)=>{
     try {
-        let userId = req.params.id;
-        let data = req.body;
-        if (userId != req.user.sub) return res.status(401).send({message: 'Permission Denied for this action'});
 
+        let data = req.body;
         if(data.password || Object.entries(data).length === 0 || data.role)return res.status(400).send({message: 'Somethings cannot be updated (Check the manual for the Instructions!)'});
             let userUpdated = await User.findOneAndUpdate(
-                {_id: req.user.sub},
+                {_id: req.user},
                 data,
                 {new: true}
 
@@ -114,10 +116,8 @@ exports.update = async(req,res)=>{
 
 exports.delete = async(req,res)=>{
     try {
-        let userId = req.params.id;
-        if(userId != req.user.sub) return res.status(401).send({message:'Permission denied due to your Role , Ask to your Local ADMIN'})
-        
-        let userDeleted = await User.findOneAndDelete({id: req.user.sub});
+   
+        let userDeleted = await User.findOneAndDelete({id: req.user});
         if(!userDeleted) return res,send({message: 'Account not found nor deleted'})
     } catch (err) {
         console.error(err)
@@ -130,38 +130,38 @@ exports.delete = async(req,res)=>{
 
 
 //ADMIN EXCLUSIVE 
-exports.save = async(req,res)=>{
+exports.save = async(req, res)=>{
     try {
-        let userId = req.params.id;
         let data = req.body;
         let params = {
-            password: data.password,
+            password: data.password
         }
-        
-
-        if(userId != req.user.sub) return res.status(401).send({message:'Permission denied, You are Attempting to Add an User as ADMIN without permissio- Wait? how do you get here in First place?'})
-
         let validate = validateData(params);
         if(validate) return res.status(400).send(validate);
-        data.password = await encrypt(data.password);
-        let user = new User (data);
-        await user.save();
-        return res.send({message: `Account Saved! \n ${user}`});
-
-    } catch (err) {
-        console.error(err)
-        return res.status(500).send({message: 'CRITICAL HIT! at "Saving as Admin"!'})
-        
-    }
+        data.password = await encrypt(data.password)
     
+        let user = new User(data);
+        if(data.role === 'ADMIN' || data.role === 'admin'){
+          
+            return res.status(401).send({message: 'CRITICAL HIT! Dont save ADMINS >:C'})
+        }
+        await user.save();
+        return res.send({message: 'Account created succesfully'})
+        
+        
+       } catch (err) {
+        console.error(err)
+        return res.status(500).send({message: 'CRITICAL HIT! at "Saving Worker"'})
+        
+       }
 }
 
 //ADMIN EXCLUSIVE (Probably Worker too)
 
 exports.getUser = async(req,res)=>{
     try {
-        let user = await User.find().populate('user');
-        return res.send({animals});
+        let user = await User.find().populate();
+        return res.send({user});
 
     } catch (err) {
         console.error(err)
@@ -171,6 +171,20 @@ exports.getUser = async(req,res)=>{
 
 
 }
+
+
+exports.getTheUser = async(req,res)=>{
+    try {
+        let userId = req.params.id;
+        let user = await User.findOne({_id: userId}).populate();
+        if(!user) return res.status(404).send({message: 'User not Found'})
+        return res.send({message: 'user found!',user})
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send({message: 'CRITICAL HIT! at "Getting ONE user"'});
+    }
+}
+
 
 
 exports.Search = async(req,res)=>{

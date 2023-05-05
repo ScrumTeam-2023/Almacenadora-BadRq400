@@ -5,7 +5,7 @@ const Service = require('./servicesAdicional.model');
 // Obtener todos los servicios
 exports.getServices = async (req, res) => {
     try {
-      let services = await Service.find();
+      let services = await Service.find().populate();
       return res.send({ message: 'Services found', services });
     } catch (err) {
       console.error(err);

@@ -14,4 +14,4 @@ api.get('/get/:id',clientController.getClientBy)
 api.put('/update/:id',clientController.updateClient);
 api.delete('/delete/:id',clientController.deleteClient);
 
-module.exports = api
+module.exports = api;

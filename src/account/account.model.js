@@ -33,4 +33,4 @@ const accountSchema = mongoose.Schema({
     versionKey:false 
 });
 
-module.exports = mongoose.model('account', accountSchema);
+module.exports = mongoose.model('Account', accountSchema);

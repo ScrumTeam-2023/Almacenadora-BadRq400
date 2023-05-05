@@ -17,64 +17,15 @@ exports.createBodega = async (req, res) => {
 //functions SEARCH 
 exports.getBodegas = async (req, res) => {
   try {
-    const bodegas = await Bodega.find().populate('client');
-    return res.send({ message: 'Bodegas found', bodegas });
+      let bodega = await Bodega.find();
+      return res.send({ message: 'Bodegas found', bodega })
   } catch (err) {
-    console.error(err);
-    return res.status(500).send({ message: 'Error getting bodegas' });
+      console.error(err);
+      return res.status(500).send({ message: 'Error getting Bodega' });
   }
-};
+}
 
-exports.search = async (req, res) => {
-  try {
-    const { name } = req.query;
 
-    const bodegas = await Bodega.find({
-      name: { $regex: name, $options: 'i' }
-    }).populate('client');
-
-    return res.send({ message: 'Bodegas found', bodegas });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).send({ message: 'Error searching bodegas' });
-  }
-};
-
-// exports.searchBodega = async (req, res) => {
-//   try {
-//     const params = {
-//       name: req.body.name,
-//       availability: req.body.availability // Nueva validación para buscar por disponibilidad
-//     };
-
-//     const validate = validateData(params);
-//     if (validate) {
-//       return res.status(400).send(validate);
-//     }
-
-//     const bodegas = await Bodega.find({
-//       $and: [
-//         {
-//           name: {
-//             $regex: params.name,
-//             $options: "i"
-//           }
-//         },
-//         {
-//           availability: {
-//             $regex: params.availability,
-//             $options: "i"
-//           }
-//         }
-//       ]
-//     }).populate("client", "name surname phone");
-
-//     return res.send({ bodegas });
-//   } catch (err) {
-//     console.error(err);
-//     return res.status(500).send({ message: "Error searching bodegas" });
-//   }
-// };
 
 //update
 exports.updateBodega = async (req, res) => {
@@ -112,7 +63,7 @@ exports.deleteBodega = async (req, res) => {
     if (bodega.client) {
       return res.status(400).send({ message: 'Cannot delete bodega assigned to a client' });
     }
-    await Bodega.findByIdAndDelete(bodegaId);
+    await Bodega.findOneAndDelete({id: req.bodega });
     return res.send({ message: 'Bodega deleted' });
   } catch (err) {
     console.error(err);

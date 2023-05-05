@@ -1,7 +1,7 @@
 'use strict'
 
 const Account = require('./account.model')
-const { validateData } = require('../utils/validate')
+const { validateData, encrypt , checkPassword } = require('../utils/validate')
 
 exports.addAccount = async (req, res) => {
     try {
@@ -44,8 +44,8 @@ exports.updateAccount = async (req, res) => {
 
 exports.deleteAccount = async (req, res) => {
     try {
-        let accountId = req.params.id;
-        let accountDeleted = await Account.findOneAndDelete({ _id: accountId });
+       
+        let accountDeleted = await Account.findOneAndDelete({ id: req.account });
         if (!accountDeleted) return res.send({ message: 'Account not found and not deleted' });
         return res.send({ message: `Account with username ${accountDeleted.name} deleted sucessfully` });
     } catch (err) {
@@ -56,8 +56,8 @@ exports.deleteAccount = async (req, res) => {
 
 exports.getAccounts = async (req, res) => {
     try {
-        let accounts = await Account.find()
-        return res.send({ message: 'Accounts found', accounts })
+        let account = await Account.find().populate();
+        return res.send({account})
     } catch (err) {
         console.error(err);
         return res.status(500).send({ message: 'Error getting Accounts' });

@@ -1,56 +1,44 @@
 'use strict'
 
-const bcrypt = require ('bcrypt');
+const bcrypt = require('bcrypt');
 
-//Validacion GEN
+//Validaciones, encriptación, comparaciones de encriptación.
 
-
-//validate Data
 exports.validateData = (data)=>{
-    let keys = Object.keys(data),msg = '';
+    let keys = Object.keys(data), msg = '';
     for(let key of keys){
-        if(data [key] !== null &&
-           data [key] !== undefined &&
-           data [key] !== '') continue;
-        msg += `Params ${key} is REQUIRED`;
+        if( data[key] !== null &&
+            data[key] !== undefined &&
+            data[key] !== '') continue;
+        msg += `Params ${key} is required\n`;
     }
     return msg.trim();
-
 }
-
-//Password Encryption
 
 exports.encrypt = async(password)=>{
-    try {
-        return await bcrypt.hash(password, 3);
-    } catch (err) {
-        console.error(err)
-        console.log('Error At Encrypting The password')
-        
+    try{
+        return await bcrypt.hash(password, 10);
+    }catch(err){
+        console.error(err);
+        return err;
     }
 }
 
-//Password Comparation
-
-exports.checkPassword = async(password,hash)=>{
-    try {
-        return await bcrypt.compare(password,hash)
-    } catch (err) {
-        console.error(err)
-        console.log('Error At Checking the Password and Hash')
+exports.checkPassword = async(password, hash)=>{
+    try{
+        return await bcrypt.compare(password, hash)
+    }catch(err){
+        console.error(err);
         return false;
-        
     }
 }
 
-
-//UpdateValidation
 exports.checkUpdate = (data)=>{
-    if ( Object.entries(data).length ===0 || data.user || data.user == ''
-    
+    if( Object.entries(data).length === 0 ||
+        data.user ||
+        data.user == ''
     ){
         return false;
     }
     return true;
-
 }
