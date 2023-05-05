@@ -6,7 +6,7 @@ const helmet = require('helmet')
 const cors = require('cors')
 //instancia 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3200;
 //RUTAS PRO
 const clientRoutes = require('../src/clients/clients.routes');
 const userRoutes = require('../src/user/user.routes');
@@ -23,6 +23,7 @@ app.use(helmet());
 app.use(morgan('dev'))
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 app.use('/user', userRoutes);
 app.use('/client', clientRoutes);
 
@@ -32,14 +33,22 @@ app.use('/client', clientRoutes);
 >>>>>>> malvarez2018477
 app.use('/user',userRoutes);
 app.use('/client',clientRoutes);
+=======
+app.use('/user', userRoutes);
+app.use('/client', clientRoutes);
+>>>>>>> ctomas2021215
 app.use('/services', servicesRoutes);
 app.use('/account',accountRoutes);
 app.use('/bodega',bodegaRoutes);
 app.use('/arrenda', arrendaRoutes);
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> main
 =======
 >>>>>>> malvarez2018477
+=======
+
+>>>>>>> ctomas2021215
 //Rutas Default
 
 //turn up This Crap

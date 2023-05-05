@@ -17,10 +17,14 @@ exports.saveClient = async (req,res)=>{
         return res.send({message: 'Client Registed! Ready to be Assign to our Services!' , client})
         
 <<<<<<< HEAD
+<<<<<<< HEAD
     } catch (error) {
 =======
     } catch (err) {
 >>>>>>> malvarez2018477
+=======
+    } catch (err) {
+>>>>>>> ctomas2021215
         console.error(err)
         return res.status(500).send({message: 'CRITICAL HIT! at "SAVE!"'})
         
@@ -30,10 +34,14 @@ exports.saveClient = async (req,res)=>{
 exports.getClient = async(req,res)=>{
     try {
 <<<<<<< HEAD
+<<<<<<< HEAD
         const client = await Client.find().populate('category')
 =======
         const client = await Client.find().populate()
 >>>>>>> malvarez2018477
+=======
+        const client = await Client.find().populate()
+>>>>>>> ctomas2021215
         return res.send({message: 'Client',client})
     } catch (err) {
         console.error(err)
@@ -79,6 +87,7 @@ exports.deleteClient = async(req,res)=>{
         let deletedClient = await Client.findOneAndDelete({_id: clientId});
         return res.send({message: 'Client Deleted Succesfully!', deletedClient})
 <<<<<<< HEAD
+<<<<<<< HEAD
         
     } catch (err) {
         console.error(err)
@@ -91,6 +100,13 @@ exports.deleteClient = async(req,res)=>{
         return res.status(500).send({message: 'CRITICAL HIT! at "DELETING!!"'}) 
 
 >>>>>>> malvarez2018477
+=======
+
+    } catch (err) {
+        console.error(err)
+        return res.status(500).send({message: 'CRITICAL HIT! at "DELETING!!"'}) 
+
+>>>>>>> ctomas2021215
     }
 }
 

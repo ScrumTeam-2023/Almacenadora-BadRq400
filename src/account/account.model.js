@@ -34,7 +34,11 @@ const accountSchema = mongoose.Schema({
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 module.exports = mongoose.model('account', accountSchema);
 =======
 module.exports = mongoose.model('Account', accountSchema);
 >>>>>>> malvarez2018477
+=======
+module.exports = mongoose.model('Account', accountSchema);
+>>>>>>> ctomas2021215
