@@ -16,7 +16,11 @@ exports.saveClient = async (req,res)=>{
         await client.save();
         return res.send({message: 'Client Registed! Ready to be Assign to our Services!' , client})
         
+<<<<<<< HEAD
     } catch (error) {
+=======
+    } catch (err) {
+>>>>>>> malvarez2018477
         console.error(err)
         return res.status(500).send({message: 'CRITICAL HIT! at "SAVE!"'})
         
@@ -25,7 +29,11 @@ exports.saveClient = async (req,res)=>{
 
 exports.getClient = async(req,res)=>{
     try {
+<<<<<<< HEAD
         const client = await Client.find().populate('category')
+=======
+        const client = await Client.find().populate()
+>>>>>>> malvarez2018477
         return res.send({message: 'Client',client})
     } catch (err) {
         console.error(err)
@@ -70,11 +78,19 @@ exports.deleteClient = async(req,res)=>{
         let clientId = req.params.id;
         let deletedClient = await Client.findOneAndDelete({_id: clientId});
         return res.send({message: 'Client Deleted Succesfully!', deletedClient})
+<<<<<<< HEAD
         
     } catch (err) {
         console.error(err)
         return res.status(500).send({message: 'CRITICAL HIT! at "DELETING!!"'}) 
         
+=======
+
+    } catch (err) {
+        console.error(err)
+        return res.status(500).send({message: 'CRITICAL HIT! at "DELETING!!"'}) 
+
+>>>>>>> malvarez2018477
     }
 }
 

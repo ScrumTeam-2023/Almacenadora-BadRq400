@@ -96,13 +96,11 @@ exports.login = async(req, res)=>{
 
 exports.update = async(req,res)=>{
     try {
-        let userId = req.params.id;
-        let data = req.body;
-        if (userId != req.user.sub) return res.status(401).send({message: 'Permission Denied for this action'});
 
+        let data = req.body;
         if(data.password || Object.entries(data).length === 0 || data.role)return res.status(400).send({message: 'Somethings cannot be updated (Check the manual for the Instructions!)'});
             let userUpdated = await User.findOneAndUpdate(
-                {_id: req.user.sub},
+                {_id: req.user},
                 data,
                 {new: true}
 
@@ -157,12 +155,13 @@ exports.save = async(req, res)=>{
         
        }
 }
+
 //ADMIN EXCLUSIVE (Probably Worker too)
 
 exports.getUser = async(req,res)=>{
     try {
-        let user = await User.find().populate('user');
-        return res.send({animals});
+        let user = await User.find().populate();
+        return res.send({user});
 
     } catch (err) {
         console.error(err)
@@ -172,6 +171,20 @@ exports.getUser = async(req,res)=>{
 
 
 }
+
+
+exports.getTheUser = async(req,res)=>{
+    try {
+        let userId = req.params.id;
+        let user = await User.findOne({_id: userId}).populate();
+        if(!user) return res.status(404).send({message: 'User not Found'})
+        return res.send({message: 'user found!',user})
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send({message: 'CRITICAL HIT! at "Getting ONE user"'});
+    }
+}
+
 
 
 exports.Search = async(req,res)=>{

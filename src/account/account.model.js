@@ -33,4 +33,8 @@ const accountSchema = mongoose.Schema({
     versionKey:false 
 });
 
+<<<<<<< HEAD
 module.exports = mongoose.model('account', accountSchema);
+=======
+module.exports = mongoose.model('Account', accountSchema);
+>>>>>>> malvarez2018477

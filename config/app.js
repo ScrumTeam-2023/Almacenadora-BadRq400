@@ -4,8 +4,6 @@ const express = require('express');
 const morgan = require('morgan')
 const helmet = require('helmet')
 const cors = require('cors')
-const userRoutes = require('../src/user/user.routes');
-const clientRoutes = require('../src/clients/clients.routes');
 //instancia 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -24,18 +22,24 @@ app.use(cors());
 app.use(helmet());
 app.use(morgan('dev'))
 <<<<<<< HEAD
+<<<<<<< HEAD
 app.use('/user', userRoutes);
 app.use('/client', clientRoutes);
 
 
 =======
+=======
+>>>>>>> malvarez2018477
 app.use('/user',userRoutes);
 app.use('/client',clientRoutes);
 app.use('/services', servicesRoutes);
 app.use('/account',accountRoutes);
 app.use('/bodega',bodegaRoutes);
 app.use('/arrenda', arrendaRoutes);
+<<<<<<< HEAD
 >>>>>>> main
+=======
+>>>>>>> malvarez2018477
 //Rutas Default
 
 //turn up This Crap
