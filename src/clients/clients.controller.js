@@ -1,7 +1,6 @@
 'use strict'
 
 const Client = require('../clients/clients.model')
-
 const { validateData, encrypt , checkPassword } = require('../utils/validate')
 const { createToken } = require ('../services/jwt')
 
@@ -17,7 +16,7 @@ exports.saveClient = async (req,res)=>{
         await client.save();
         return res.send({message: 'Client Registed! Ready to be Assign to our Services!' , client})
         
-    } catch (error) {
+    } catch (err) {
         console.error(err)
         return res.status(500).send({message: 'CRITICAL HIT! at "SAVE!"'})
         
@@ -26,7 +25,7 @@ exports.saveClient = async (req,res)=>{
 
 exports.getClient = async(req,res)=>{
     try {
-        const client = await Client.find().populate('category')
+        const client = await Client.find().populate()
         return res.send({message: 'Client',client})
     } catch (err) {
         console.error(err)
@@ -71,11 +70,11 @@ exports.deleteClient = async(req,res)=>{
         let clientId = req.params.id;
         let deletedClient = await Client.findOneAndDelete({_id: clientId});
         return res.send({message: 'Client Deleted Succesfully!', deletedClient})
-        
+
     } catch (err) {
         console.error(err)
         return res.status(500).send({message: 'CRITICAL HIT! at "DELETING!!"'}) 
-        
+
     }
 }
 

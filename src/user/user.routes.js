@@ -6,10 +6,11 @@ const userController = require('./user.controller')
 const { ensureAuth , isAdmin } = require('../services/authenticated')
 
 //PUBLIC
-api.post('/register',userController.register)
+api.post('/register',userController.register);
 api.post('/login',userController.login);
-api.post('/search',userController.Search)
-api.get('/get',userController.getUser)
+api.post('/search',userController.Search);
+api.get('/get',userController.getUser);
+api.get('/get/:id',userController.getTheUser);;
 //PRIVATE
 api.post ('/save', userController.save)
 api.put('/update/:id',userController.update)

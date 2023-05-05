@@ -2,8 +2,8 @@
 
 const express = require('express');
 const api = express.Router();
-const clientController = require('./clients.controller')
-const { ensureAuth , isAdmin } = require('../services/authenticated')
+const clientController = require('../clients/clients.controller')
+const {ensureAuth , isAdmin} = require('../services/authenticated')
 
 //EMPLOYEE ONLY! CRUD
 api.post('/save',clientController.saveClient);
@@ -14,4 +14,4 @@ api.get('/get/:id',clientController.getClientBy)
 api.put('/update/:id',clientController.updateClient);
 api.delete('/delete/:id',clientController.deleteClient);
 
-module.exports = api;
+module.exports = api
