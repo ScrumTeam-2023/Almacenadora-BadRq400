@@ -118,10 +118,8 @@ exports.update = async(req,res)=>{
 
 exports.delete = async(req,res)=>{
     try {
-        let userId = req.params.id;
-        if(userId != req.user.sub) return res.status(401).send({message:'Permission denied due to your Role , Ask to your Local ADMIN'})
-        
-        let userDeleted = await User.findOneAndDelete({id: req.user.sub});
+   
+        let userDeleted = await User.findOneAndDelete({id: req.user});
         if(!userDeleted) return res,send({message: 'Account not found nor deleted'})
     } catch (err) {
         console.error(err)
@@ -134,32 +132,31 @@ exports.delete = async(req,res)=>{
 
 
 //ADMIN EXCLUSIVE 
-exports.save = async(req,res)=>{
+exports.save = async(req, res)=>{
     try {
-        let userId = req.params.id;
         let data = req.body;
         let params = {
-            password: data.password,
+            password: data.password
         }
-        
-
-        if(userId != req.user.sub) return res.status(401).send({message:'Permission denied, You are Attempting to Add an User as ADMIN without permissio- Wait? how do you get here in First place?'})
-
         let validate = validateData(params);
         if(validate) return res.status(400).send(validate);
-        data.password = await encrypt(data.password);
-        let user = new User (data);
-        await user.save();
-        return res.send({message: `Account Saved! \n ${user}`});
-
-    } catch (err) {
-        console.error(err)
-        return res.status(500).send({message: 'CRITICAL HIT! at "Saving as Admin"!'})
-        
-    }
+        data.password = await encrypt(data.password)
     
+        let user = new User(data);
+        if(data.role === 'ADMIN' || data.role === 'admin'){
+          
+            return res.status(401).send({message: 'CRITICAL HIT! Dont save ADMINS >:C'})
+        }
+        await user.save();
+        return res.send({message: 'Account created succesfully'})
+        
+        
+       } catch (err) {
+        console.error(err)
+        return res.status(500).send({message: 'CRITICAL HIT! at "Saving Worker"'})
+        
+       }
 }
-
 //ADMIN EXCLUSIVE (Probably Worker too)
 
 exports.getUser = async(req,res)=>{
